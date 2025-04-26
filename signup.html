@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Fivescans</title>
+    <!-- Font Awesome for icons (Optional, but good practice to keep consistent) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Basic Reset & Defaults (Copied from main page) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-green: #2ecc71;
+            --dark-bg: #1a1d24;
+            --medium-dark-bg: #252a34;
+            --light-text: #e0e0e0;
+            --medium-text: #a0a0a0;
+            --glow-green: rgba(46, 204, 113, 0.6);
+            --darker-green: #27ae60;
+            --header-bg: #16181d;
+            --border-color: #333a45;
+            --input-bg: #2c313a; /* Slightly lighter for input fields */
+            --transition-speed: 0.4s;
+        }
+
+        html {
+             scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            font-size: 16px;
+            display: flex; /* Use flexbox for sticky footer */
+            flex-direction: column; /* Stack elements vertically */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        a:hover {
+            color: var(--darker-green);
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 0.8em;
+            line-height: 1.3;
+            font-weight: 600;
+        }
+
+        /* Specific h2 style for auth forms */
+        .auth-form-container h2 {
+             font-size: 1.8rem;
+             text-align: center;
+             color: var(--light-text);
+             margin-bottom: 1.5em;
+        }
+
+
+        p {
+            margin-bottom: 1em;
+            color: var(--medium-text);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header (Copied from main page) */
+        header {
+            background-color: var(--header-bg);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            /* Removed sticky for potentially simpler auth pages */
+            /* position: sticky;
+            top: 0;
+            z-index: 1000; */
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-text);
+            position: relative;
+            padding-left: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo::before {
+             content: '';
+             position: absolute;
+             left: -5px;
+             top: 50%;
+             transform: translateY(-50%);
+             width: 20px;
+             height: 20px;
+             background-color: var(--primary-green);
+             border-radius: 50%;
+             filter: blur(10px);
+             opacity: 0.8;
+             /* Removed pulsing animation for simplicity on static pages */
+             /* animation: pulseLogoGlow 3s infinite ease-in-out; */
+        }
+
+        /* @keyframes pulseLogoGlow { ... } /* Animation removed */
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 25px;
+        }
+
+        nav a {
+            color: var(--medium-text);
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color var(--transition-speed) ease;
+        }
+
+        nav a::after { /* Underline effect */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-green);
+            transition: width var(--transition-speed) ease;
+        }
+
+        nav a:hover,
+        nav a.active { /* Keep style for potential active state later */
+            color: var(--primary-green);
+        }
+        nav a:hover::after,
+        nav a.active::after {
+             width: 100%;
+        }
+
+        .auth-buttons .btn {
+            padding: 9px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+            margin-left: 10px;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: #fff;
+            border-color: var(--primary-green);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--darker-green);
+            border-color: var(--darker-green);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--light-text);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--medium-dark-bg);
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1; /* Allow main to grow and push footer down */
+            display: flex; /* Use flex to center content */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            padding: 40px 0; /* Add some padding */
+        }
+
+        /* Signup Form Specific Styles */
+        .signup-section {
+             width: 100%;
+             max-width: 450px; /* Limit form width */
+        }
+
+        .auth-form-container {
+            background-color: var(--medium-dark-bg);
+            padding: 35px 40px; /* More padding */
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-form-container form {
+             display: flex;
+             flex-direction: column;
+        }
+
+        .auth-form-container input[type="text"],
+        .auth-form-container input[type="password"],
+        .auth-form-container input[type="email"] /* Add email if needed */
+         {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--light-text);
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px; /* Increased spacing */
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
+        .auth-form-container input:focus {
+             border-color: var(--primary-green);
+             box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.3); /* Subtle glow on focus */
+        }
+
+        .auth-form-container input::placeholder {
+             color: var(--medium-text);
+             opacity: 0.7;
+        }
+
+        .auth-form-container .btn-primary {
+             padding: 12px 15px; /* Match input padding */
+             font-size: 1.05rem; /* Slightly larger text */
+             margin-top: 10px; /* Space above button */
+             width: 100%; /* Make button full width */
+        }
+
+        .auth-form-container .switch-auth-link {
+            text-align: center;
+            margin-top: 25px; /* Space above the 'already have an account' link */
+            font-size: 0.95rem;
+            color: var(--medium-text);
+        }
+
+        .auth-form-container .switch-auth-link a {
+             font-weight: 600; /* Make the link stand out a bit */
+        }
+
+
+        /* Footer (Copied from main page) */
+        footer {
+            background-color: var(--header-bg);
+            padding: 25px 0;
+            text-align: center;
+            color: var(--medium-text);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0; /* Prevent footer from shrinking */
+        }
+
+        /* Responsive Adjustments (Simplified for auth pages) */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+                padding-left: 0;
+            }
+            nav li {
+                margin: 0 15px;
+            }
+            .auth-buttons {
+                 margin-top: 15px;
+            }
+            .auth-form-container h2 {
+                 font-size: 1.6rem;
+            }
+        }
+
+         @media (max-width: 480px) {
+             .auth-form-container {
+                 padding: 30px 25px; /* Less padding on small screens */
+             }
+             .auth-form-container h2 {
+                 font-size: 1.5rem;
+             }
+             nav li { margin: 0 10px; }
+             nav a { font-size: 0.95rem; }
+             .auth-buttons .btn { margin: 8px 5px; padding: 8px 15px;}
+         }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                Fivescans
+            </div>
+            <nav>
+                <ul>
+                    <!-- Remove 'active' class from Home unless this IS the homepage -->
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <!-- Highlight the relevant button -->
+                <a href="login.html" class="btn btn-secondary">Login</a>
+                <a href="signup.html" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="signup-section">
+            <div class="container">
+                 <div class="auth-form-container">
+                    <h2>Sign Up</h2>
+                    <form action="/signup" method="POST"> <!-- Keep action/method as needed -->
+                        <label for="username" class="sr-only">Username</label> <!-- Added label for accessibility -->
+                        <input type="text" id="username" name="username" placeholder="Enter username" required>
+
+                        <label for="password" class="sr-only">Password</label> <!-- Added label for accessibility -->
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    </form>
+
+                    <p class="switch-auth-link">Already have an account? <a href="login.html">Login here</a></p>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Fivescans. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Add Screen Reader Only CSS for Labels -->
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+
+</body>
+</html>

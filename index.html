@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fivescans - Home</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Basic Reset & Defaults */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-green: #2ecc71;
+            --dark-bg: #1a1d24;
+            --medium-dark-bg: #252a34;
+            --light-text: #e0e0e0;
+            --medium-text: #a0a0a0;
+            --glow-green: rgba(46, 204, 113, 0.6);
+            --darker-green: #27ae60;
+            --header-bg: #16181d;
+            --border-color: #333a45;
+            --transition-speed: 0.4s;
+        }
+
+        html {
+             scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            font-size: 16px;
+            overflow-x: hidden; /* Prevent horizontal scrollbars caused by animations */
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        a:hover {
+            color: var(--darker-green);
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 0.8em;
+            line-height: 1.3;
+            font-weight: 600;
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2rem; text-align: center; margin-bottom: 1.5em; color: var(--light-text); }
+        h3 { font-size: 1.3rem; color: var(--light-text); }
+
+        p {
+            margin-bottom: 1em;
+            color: var(--medium-text);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--header-bg);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-text);
+            position: relative;
+            padding-left: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo::before {
+             content: '';
+             position: absolute;
+             left: -5px;
+             top: 50%;
+             transform: translateY(-50%);
+             width: 20px;
+             height: 20px;
+             background-color: var(--primary-green);
+             border-radius: 50%;
+             filter: blur(10px);
+             opacity: 0.8;
+             transition: filter var(--transition-speed) ease, opacity var(--transition-speed) ease;
+             animation: pulseLogoGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseLogoGlow {
+            0%, 100% { opacity: 0.8; filter: blur(10px); }
+            50% { opacity: 1; filter: blur(12px); }
+        }
+
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 25px;
+        }
+
+        nav a {
+            color: var(--medium-text);
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color var(--transition-speed) ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-green);
+            transition: width var(--transition-speed) ease;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--primary-green);
+        }
+        nav a:hover::after,
+        nav a.active::after {
+             width: 100%;
+        }
+
+
+        .auth-buttons .btn {
+            padding: 9px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+            margin-left: 10px;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* Initially hide logout button */
+        #logout-btn {
+            display: none;
+             background-color: #c0392b; /* Red for logout */
+             border-color: #c0392b;
+             color: #fff;
+        }
+         #logout-btn:hover {
+             background-color: #a93226; /* Darker red */
+             border-color: #a93226;
+             color: #fff;
+             /* Keep standard button hover effects */
+             transform: translateY(-2px);
+             box-shadow: 0 4px 10px rgba(192, 57, 43, 0.4);
+         }
+
+
+        .btn:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: #fff;
+            border-color: var(--primary-green);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--darker-green);
+            border-color: var(--darker-green);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--light-text);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--medium-dark-bg);
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+
+        /* Main Content Sections */
+        main section {
+            padding: 70px 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding-top: 90px;
+            padding-bottom: 90px;
+            background: linear-gradient(rgba(26, 29, 36, 0.85), rgba(26, 29, 36, 0.98)),
+                        radial-gradient(ellipse at top, var(--glow-green), transparent 75%);
+            background-blend-mode: overlay;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            color: var(--light-text);
+            margin-bottom: 0.5em;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero .highlight {
+            color: var(--primary-green);
+            animation: pulseHighlight 2.5s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes pulseHighlight {
+            0%, 100% { text-shadow: 0 0 15px var(--glow-green); transform: scale(1); }
+            50% { text-shadow: 0 0 25px var(--glow-green); transform: scale(1.03); }
+        }
+
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--light-text);
+            animation: fadeInUp 1s ease-out 0.3s;
+            animation-fill-mode: backwards;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+             padding-top: 80px;
+        }
+
+        .how-it-works .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            margin-top: 40px;
+        }
+
+        .feature-box {
+            background-color: var(--medium-dark-bg);
+            padding: 35px 30px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease, opacity var(--transition-speed) ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-box.is-visible {
+             opacity: 1;
+             transform: translateY(0);
+        }
+
+        /* Stagger animation */
+        .feature-box:nth-child(1).is-visible { transition-delay: 0.1s; }
+        .feature-box:nth-child(2).is-visible { transition-delay: 0.2s; }
+        .feature-box:nth-child(3).is-visible { transition-delay: 0.3s; }
+
+
+        .feature-box:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+            border-color: var(--primary-green);
+        }
+
+        .icon-wrapper {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 25px auto;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            box-shadow: 0 0 15px var(--glow-green);
+            font-size: 1.8rem;
+            color: var(--primary-green);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
+        .feature-box:hover .icon-wrapper {
+             transform: rotate(10deg) scale(1.1);
+             box-shadow: 0 0 20px var(--glow-green);
+        }
+
+
+        /* Features List Section */
+        .features-list {
+             background-color: var(--dark-bg);
+        }
+
+        .features-list h2 {
+             opacity: 0;
+             transform: translateY(30px);
+             transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+         .features-list h2.is-visible {
+             opacity: 1;
+             transform: translateY(0);
+             /* Optional: Add delay if h2 should animate after feature boxes are potentially visible */
+             /* transition-delay: 0.4s; */
+         }
+
+        .features-grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px 40px;
+            margin-top: 40px;
+            padding-left: 0;
+        }
+
+        .features-grid-list li {
+            display: flex;
+            align-items: flex-start;
+            color: var(--medium-text);
+            font-size: 1rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .features-grid-list li.is-visible {
+             opacity: 1;
+             transform: translateX(0);
+        }
+        /* Stagger animation */
+        .features-grid-list li:nth-child(odd).is-visible { transition-delay: 0.2s; }
+        .features-grid-list li:nth-child(even).is-visible { transition-delay: 0.4s; }
+
+
+        .features-grid-list li i {
+            color: var(--primary-green);
+            margin-right: 12px;
+            margin-top: 4px;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+        .features-grid-list li:hover i {
+             transform: scale(1.2);
+        }
+
+
+        /* Ethical Usage Section */
+        .ethical-usage {
+            background-color: var(--medium-dark-bg);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+            transition-delay: 0.2s; /* Delay relative to its position */
+        }
+        .ethical-usage.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ethical-usage h2 {
+             color: var(--primary-green);
+        }
+
+        .ethical-usage p {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--light-text);
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: var(--header-bg);
+            padding: 25px 0;
+            text-align: center;
+            color: var(--medium-text);
+            font-size: 0.9rem;
+            margin-top: 80px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Simple Animation Keyframes */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+             .features-grid-list {
+                  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+             }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+             .logo { padding-left: 0; margin-bottom: 10px;}
+             .logo::before { left: 50%; transform: translate(-50%, -50%);}
+
+            nav ul {
+                margin-top: 10px;
+                justify-content: center;
+                padding-left: 0;
+            }
+            nav li {
+                margin: 0 10px;
+            }
+            .auth-buttons {
+                 margin-top: 15px;
+                 display: flex;
+                 flex-wrap: wrap;
+                 justify-content: center;
+            }
+             .auth-buttons .btn { margin: 5px; }
+
+            .hero {
+                padding: 70px 0;
+            }
+
+            .features-grid-list {
+                 grid-template-columns: 1fr;
+                 gap: 20px;
+            }
+
+            main section {
+                 padding: 50px 0;
+            }
+
+             /* Sequential delays when stacked */
+             .feature-box:nth-child(n).is-visible { transition-delay: calc(0.1s * n); }
+             .features-grid-list li:nth-child(n).is-visible { transition-delay: calc(0.1s * n); }
+        }
+
+         @media (max-width: 480px) {
+             h1 { font-size: 1.9rem; }
+             h2 { font-size: 1.6rem; }
+             .hero p { font-size: 1rem;}
+
+             nav li { margin: 0 8px; }
+             nav a { font-size: 0.9rem; }
+             .auth-buttons .btn { margin: 5px; padding: 8px 15px;}
+
+             .how-it-works .features-grid {
+                 grid-template-columns: 1fr;
+                 gap: 25px;
+             }
+             .feature-box { padding: 30px 25px;}
+             .icon-wrapper { width: 60px; height: 60px; font-size: 1.6rem; }
+         }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                Fivescans
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">About</a></li>
+                    <!-- Consider adding a link to a user profile/dashboard visible only when logged in -->
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <!-- Use links for Login/Register for navigation -->
+                <a href="login.html" id="login-btn" class="btn btn-secondary">Login</a>
+                <a href="signup.html" id="register-btn" class="btn btn-primary">Register</a>
+                <!-- Use a button for the Logout action -->
+                <button id="logout-btn" class="btn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>About <span class="highlight">Fivescans</span></h1>
+                <p>
+                    A sophisticated tool designed to help server administrators, developers, and security
+                    researchers analyze FiveM server dumps with precision and insight.
+                </p>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="animate-on-scroll">How It Works</h2>
+                <div class="features-grid">
+                    <div class="feature-box animate-on-scroll">
+                        <div class="icon-wrapper icon-server">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Server Events</h3>
+                        <p>Identifies all TriggerServerEvent calls and parameters.</p>
+                    </div>
+                    <div class="feature-box animate-on-scroll">
+                        <div class="icon-wrapper icon-client">
+                           <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Client Events</h3>
+                        <p>Extracts all TriggerEvent calls for local client interactions.</p>
+                    </div>
+                    <div class="feature-box animate-on-scroll">
+                         <div class="icon-wrapper icon-coords">
+                           <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Coordinates</h3>
+                        <p>Locates coordinates in vector3 format or table format with contextual information.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-list">
+            <div class="container">
+                <h2 class="animate-on-scroll">Features</h2>
+                 <ul class="features-grid-list">
+                    <li class="animate-on-scroll"><i class="fas fa-check"></i> Fast, client-side analysis of dump files</li>
+                    <li class="animate-on-scroll"><i class="fas fa-check"></i> Intelligent parameter type detection</li>
+                    <li class="animate-on-scroll"><i class="fas fa-check"></i> Coordinate discovery and association</li>
+                    <li class="animate-on-scroll"><i class="fas fa-check"></i> Context-aware code analysis</li>
+                    <li class="animate-on-scroll"><i class="fas fa-check"></i> Exportable results for later use</li>
+                    <li class="animate-on-scroll"><i class="fas fa-check"></i> Responsive design with dark mode</li>
+                </ul>
+            </div>
+        </section>
+
+         <section class="ethical-usage animate-on-scroll">
+            <div class="container">
+                <h2>Ethical Usage</h2>
+                <p>
+                    Fivescans is intended for educational purposes, security research, and server administration on servers you own or have explicit permission to analyze. Unauthorized scanning or analysis of servers is strictly prohibited. Always respect privacy and legal boundaries.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Fivescans. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Animations and Login State -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Scroll Animation Logic ---
+            const observerOptions = {
+                root: null, // relative to the viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            };
+
+            const intersectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+            const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+            elementsToAnimate.forEach(el => intersectionObserver.observe(el));
+
+            // --- Login/Logout Button Logic ---
+            const loginBtn = document.getElementById('login-btn');
+            const registerBtn = document.getElementById('register-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+
+            // Check login status from localStorage
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+            if (isLoggedIn) {
+                // User is logged in: Hide Login/Register, Show Logout
+                if(loginBtn) loginBtn.style.display = 'none';
+                if(registerBtn) registerBtn.style.display = 'none';
+                if(logoutBtn) logoutBtn.style.display = 'inline-block'; // Or 'block' if needed
+            } else {
+                // User is not logged in: Show Login/Register, Hide Logout
+                if(loginBtn) loginBtn.style.display = 'inline-block';
+                if(registerBtn) registerBtn.style.display = 'inline-block';
+                if(logoutBtn) logoutBtn.style.display = 'none';
+            }
+
+            // Add event listener for the logout button
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    // Remove the login flag from localStorage
+                    localStorage.removeItem('isLoggedIn');
+                    // Reload the page to reflect the logged-out state
+                    window.location.reload();
+                });
+            }
+        });
+
+        // Check if the user is logged in through login.html
+        const urlParams = new URLSearchParams(window.location.search);
+        const loggedIn = urlParams.get('loggedIn') === 'true';
+
+        if (loggedIn) {
+            // Set login status in localStorage
+            localStorage.setItem('isLoggedIn', 'true');
+            // Redirect to the homepage without query parameters
+            window.location.href = window.location.origin + window.location.pathname;
+        }
+    </script>
+
+</body>
+</html>

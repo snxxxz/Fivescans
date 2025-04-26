@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fivescans - Login</title> <!-- Changed title -->
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* --- Start: Copied CSS from index.html --- */
+        /* Basic Reset & Defaults */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-green: #2ecc71;
+            --dark-bg: #1a1d24;
+            --medium-dark-bg: #252a34;
+            --light-text: #e0e0e0;
+            --medium-text: #a0a0a0;
+            --glow-green: rgba(46, 204, 113, 0.6);
+            --darker-green: #27ae60;
+            --header-bg: #16181d;
+            --border-color: #333a45;
+            --transition-speed: 0.4s;
+            --error-red: #e74c3c; /* Added error color */
+            --success-green: var(--primary-green); /* Use primary green for success */
+        }
+
+        html {
+             scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        a:hover {
+            color: var(--darker-green);
+        }
+
+        h1, h2, h3 { /* Adjusted header selector */
+            margin-bottom: 0.8em;
+            line-height: 1.3;
+            font-weight: 600;
+            color: var(--light-text); /* Ensure headers are light */
+        }
+
+        h1 { font-size: 2.8rem; } /* Kept for consistency if needed */
+        h2 { font-size: 2rem; text-align: center; margin-bottom: 1.5em; }
+        h3 { font-size: 1.3rem; }
+
+        p {
+            margin-bottom: 1em;
+            color: var(--medium-text);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header Styles (Copied) */
+        header {
+            background-color: var(--header-bg);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-text);
+            position: relative;
+            padding-left: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo::before {
+             content: '';
+             position: absolute;
+             left: -5px;
+             top: 50%;
+             transform: translateY(-50%);
+             width: 20px;
+             height: 20px;
+             background-color: var(--primary-green);
+             border-radius: 50%;
+             filter: blur(10px);
+             opacity: 0.8;
+             transition: filter var(--transition-speed) ease, opacity var(--transition-speed) ease;
+             animation: pulseLogoGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseLogoGlow {
+            0%, 100% { opacity: 0.8; filter: blur(10px); }
+            50% { opacity: 1; filter: blur(12px); }
+        }
+
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 25px;
+        }
+
+        nav a {
+            color: var(--medium-text);
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color var(--transition-speed) ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-green);
+            transition: width var(--transition-speed) ease;
+        }
+
+        nav a:hover,
+        nav a.active { /* Added .active for consistency */
+            color: var(--primary-green);
+        }
+        nav a:hover::after,
+        nav a.active::after {
+             width: 100%;
+        }
+
+
+        /* Button Styles (Copied & Adjusted) */
+        .auth-buttons .btn, /* Target header buttons */
+        #login-form button /* Target form button */
+         {
+            padding: 9px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+            margin-left: 10px;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center; /* Ensure text is centered for button tag */
+        }
+        #login-form button {
+             margin-left: 0; /* Remove left margin for form button */
+             margin-top: 15px; /* Add top margin */
+             width: 100%; /* Make form button full width */
+             background-color: var(--primary-green); /* Style as primary */
+             color: #fff;
+             border-color: var(--primary-green);
+        }
+         #login-form button:hover {
+             background-color: var(--darker-green);
+             border-color: var(--darker-green);
+             color: #fff;
+              transform: translateY(-2px);
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+         }
+
+
+        #logout-btn { /* Logout button specific */
+            display: none;
+            background-color: #c0392b;
+            border-color: #c0392b;
+            color: #fff;
+        }
+         #logout-btn:hover {
+             background-color: #a93226;
+             border-color: #a93226;
+             color: #fff;
+             transform: translateY(-2px);
+             box-shadow: 0 4px 10px rgba(192, 57, 43, 0.4);
+         }
+
+
+        .btn:hover { /* General hover for non-form buttons */
+             transform: translateY(-2px);
+             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary { /* Register button */
+            background-color: var(--primary-green);
+            color: #fff;
+            border-color: var(--primary-green);
+        }
+        .btn-primary:hover {
+            background-color: var(--darker-green);
+            border-color: var(--darker-green);
+            color: #fff;
+        }
+
+        .btn-secondary { /* Login button in header */
+            background-color: transparent;
+            color: var(--light-text);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            background-color: var(--medium-dark-bg);
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+        /* --- End: Copied CSS from index.html --- */
+
+
+        /* --- Login Page Specific Styles --- */
+        main {
+             padding: 60px 0; /* Add padding around the main content */
+             display: flex; /* Enable flex for centering */
+             justify-content: center; /* Center flex items horizontally */
+             align-items: center; /* Center flex items vertically */
+             min-height: calc(100vh - 75px - 69px); /* Adjust based on header/footer height */
+        }
+
+        .login-container {
+             background-color: var(--medium-dark-bg);
+             padding: 40px;
+             border-radius: 8px;
+             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+             border: 1px solid var(--border-color);
+             width: 100%;
+             max-width: 450px; /* Limit width of the login box */
+             text-align: center; /* Center text inside the box */
+        }
+
+         .login-container h2 {
+             margin-bottom: 1.5em; /* Space below heading */
+             color: var(--light-text);
+         }
+
+        #login-form input[type="text"],
+        #login-form input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            background-color: var(--dark-bg); /* Darker background for inputs */
+            color: var(--light-text);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
+        #login-form input[type="text"]:focus,
+        #login-form input[type="password"]:focus {
+             outline: none;
+             border-color: var(--primary-green);
+             box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.3); /* Green glow on focus */
+        }
+
+         /* Placeholder text color */
+        #login-form input::placeholder {
+             color: var(--medium-text);
+             opacity: 0.7;
+        }
+
+        .signup-link { /* Style the paragraph containing the signup link */
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: var(--medium-text);
+        }
+        .signup-link a {
+            font-weight: 600; /* Make link slightly bolder */
+        }
+
+
+        /* Alert Styles */
+        #alert {
+            min-height: 20px; /* Reserve space even when empty */
+            margin-bottom: 20px;
+        }
+        .alert {
+            padding: 12px 15px;
+            margin-bottom: 15px; /* Already had margin, adjusted padding */
+            color: var(--light-text); /* Light text for alerts */
+            border-radius: 5px;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+            text-align: left; /* Align text left within alert */
+        }
+        .error {
+            background-color: rgba(231, 76, 60, 0.2); /* Semi-transparent red bg */
+            border-color: var(--error-red);
+            color: #f8d7da; /* Lighter red text for better contrast */
+        }
+        .success {
+            background-color: rgba(46, 204, 113, 0.15); /* Semi-transparent green bg */
+            border-color: var(--success-green);
+            color: #d4edda; /* Lighter green text */
+        }
+        /* --- End: Login Page Specific Styles --- */
+
+        /* Responsive Adjustments (Copied & potentially needs review for login context) */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+             .logo { padding-left: 0; margin-bottom: 10px;}
+             .logo::before { left: 50%; transform: translate(-50%, -50%);}
+
+            nav ul {
+                margin-top: 10px;
+                justify-content: center;
+                padding-left: 0;
+            }
+            nav li {
+                margin: 0 10px;
+            }
+            .auth-buttons {
+                 margin-top: 15px;
+                 display: flex;
+                 flex-wrap: wrap;
+                 justify-content: center;
+            }
+             .auth-buttons .btn { margin: 5px; }
+
+            main {
+                 padding: 40px 0;
+                 min-height: calc(100vh - 150px); /* Adjust min-height for stacked header */
+            }
+             .login-container {
+                 padding: 30px;
+                 max-width: 90%; /* Allow login box to be wider */
+             }
+        }
+
+         @media (max-width: 480px) {
+             h2 { font-size: 1.6rem; }
+             nav li { margin: 0 8px; }
+             nav a { font-size: 0.9rem; }
+             .auth-buttons .btn { margin: 5px; padding: 8px 15px;}
+             .login-container { padding: 25px; }
+             #login-form input[type="text"],
+             #login-form input[type="password"] { padding: 10px 12px; font-size: 0.95rem; }
+             #login-form button { padding: 10px 15px; font-size: 0.9rem; }
+         }
+
+    </style>
+</head>
+<body>
+
+    <!-- Copied Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                Fivescans
+            </div>
+            <nav>
+                <ul>
+                    <!-- Make sure the 'active' class is not on Home here -->
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" id="login-btn" class="btn btn-secondary">Login</a>
+                <a href="register.html" id="register-btn" class="btn btn-primary">Register</a>
+                <button id="logout-btn" class="btn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Login Content -->
+    <main>
+        <div class="login-container">
+            <h2>Login</h2>
+
+            <div id="alert"></div> <!-- Alert placeholder -->
+
+            <!--
+                NOTE: action="/login" method="POST" implies server-side handling.
+                If using the localStorage method from index.html, remove these attributes
+                and add an event listener to handle submission via JavaScript.
+             -->
+            <form id="login-form" action="/login" method="POST">
+                <input type="text" name="username" placeholder="Enter username" required><br>
+                <input type="password" name="password" placeholder="Enter password" required><br>
+                <button type="submit">Login</button>
+            </form>
+
+            <p class="signup-link">Don't have an account? <a href="signup.html">Sign up here</a></p>
+        </div>
+    </main>
+
+    <!-- No footer needed typically on a login page, but uncomment if desired
+    <footer>
+        <div class="container">
+            <p>© 2024 Fivescans. All rights reserved.</p>
+        </div>
+    </footer>
+    -->
+
+    <!-- JavaScript for Header Buttons and Alerts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Header Button Login/Logout Logic ---
+            const loginBtn = document.getElementById('login-btn');
+            const registerBtn = document.getElementById('register-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+            if (isLoggedIn) {
+                if(loginBtn) loginBtn.style.display = 'none';
+                if(registerBtn) registerBtn.style.display = 'none';
+                if(logoutBtn) logoutBtn.style.display = 'inline-block';
+            } else {
+                if(loginBtn) loginBtn.style.display = 'inline-block';
+                if(registerBtn) registerBtn.style.display = 'inline-block';
+                if(logoutBtn) logoutBtn.style.display = 'none';
+            }
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('isLoggedIn');
+                    window.location.reload(); // Reload current page or redirect
+                });
+            }
+
+            // --- Alert Logic (from original login.html) ---
+            const params = new URLSearchParams(window.location.search);
+            const alertDiv = document.getElementById('alert');
+
+            if (params.has('error')) {
+              // Use textContent for security to prevent XSS if error message comes from user input
+              const errorMsg = document.createElement('div');
+              errorMsg.className = 'alert error';
+              errorMsg.textContent = params.get('error');
+              alertDiv.appendChild(errorMsg);
+            } else if (params.has('success')) {
+              const successMsg = document.createElement('div');
+              successMsg.className = 'alert success';
+              successMsg.textContent = params.get('success');
+              alertDiv.appendChild(successMsg);
+            }
+        });
+    </script>
+</body>
+</html>
